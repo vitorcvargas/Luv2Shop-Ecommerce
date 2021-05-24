@@ -1,0 +1,60 @@
+<h3>Your Orders</h3>
+<div class="main-content">
+
+    <div *ngIf="orderHistoryList.length > 0">
+        <table class="table table-bordered">
+            <tr>
+                <th width="20%">Order Tracking Number</th>
+                <th width="10%">Total Price</th>
+                <th width="10%">Total Quantity</th>
+                <th width="10%">Date</th>
+            </tr>
+    
+            <tr *ngFor="let order of orderHistoryList">
+                <td>{{ order.orderTrackingNumber }}</td>
+                <td>{{ order.totalPrice | currency: "USD" }}</td>
+                <td>{{ order.totalQuantity }}</td>
+                <td>{{ order.dateCreated | date: "medium" }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div *ngIf="orderHistoryList.length == 0" class="alert alert-warning col-md-12" role="alert">
+        No orders found.
+    </div>
+
+    <div class="footer-pagination">
+        <div class="row">
+            <div class="col-md-6"></div>
+            
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-9" style="padding-left: 30%">
+                        <ngb-pagination [(page)]="pageNumber"
+                                        [pageSize]="pageSize"
+                                        [collectionSize]="totalElements"
+                                        [maxSize]="5"
+                                        [boundaryLinks]="true"
+                                        (pageChange)="handleOrderHistory()">  
+
+                        </ngb-pagination>
+                    </div>
+
+                    <div class="col-md-3 mt-2" style="text-align: right;">
+                        <span class="mr-2">Page Size</span>
+
+                        <select (change)="updatePageSize($event)">
+                            <option>1</option>
+                            <option selected="true">5</option>
+                            <option>10</option>
+                            <option>20</option>
+                            <option>50</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
